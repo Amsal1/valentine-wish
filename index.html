@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/heart.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For My Love 💕</title>
+    
+    <!-- Google Fonts: Dancing Script (romantic headings) and Poppins (body text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Floating Hearts Container (for background animation) -->
+    <div id="floating-hearts" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+      <div class="nav-container">
+        <a href="#hero" class="nav-logo">💕</a>
+        
+        <!-- Mobile hamburger menu button -->
+        <button 
+          class="nav-toggle" 
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+        >
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+        
+        <!-- Navigation links -->
+        <ul id="nav-menu" class="nav-menu">
+          <li><a href="#reasons" class="nav-link">Why I Love You</a></li>
+          <li><a href="#gallery" class="nav-link">Our Gallery</a></li>
+          <li><a href="#game" class="nav-link">Love Game</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="app">
+      <!-- Hero Section -->
+      <section id="hero" class="section hero-section">
+        <div class="section-content">
+          <h1 class="hero-title" data-config="hero.title">💕 For My Love 💕</h1>
+          <p class="hero-subtitle" data-config="hero.subtitle">Every moment with you is a blessing. This is my little corner of the internet, just for you.</p>
+          <div class="scroll-indicator" aria-hidden="true">
+            <span class="scroll-arrow">↓</span>
+            <span class="scroll-text" data-config="hero.ctaText">See Why I Love You</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reasons I Love You Section -->
+      <section id="reasons" class="section reasons-section">
+        <div class="section-content">
+          <h2 class="section-title" data-config="reasons.sectionTitle">Why I Love You</h2>
+          <p class="section-subtitle">Let me count the ways...</p>
+          <div id="reasons-container" class="reasons-grid">
+            <!-- Reason cards will be dynamically inserted here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Secret Photo Gallery Section -->
+      <section id="gallery" class="section gallery-section">
+        <div class="section-content">
+          <h2 class="section-title" data-config="gallery.sectionTitle">Photo Gallery</h2>
+          <p class="section-subtitle" data-config="gallery.sectionSubtitle">Tap to reveal the moments I adore 💕</p>
+          <div id="gallery-container" class="gallery-grid">
+            <!-- Gallery cards will be dynamically inserted here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Memory Section - Our Special Photo -->
+      <section id="featured-memory" class="section featured-memory-section">
+        <div class="section-content">
+          <h2 class="section-title">A Rare Memory 📸</h2>
+          <p class="section-subtitle">Our only photo together from 8 years ago... and still my favorite 💕</p>
+          <div class="featured-photo-container">
+            <div class="featured-photo-frame">
+              <img src="/photos/us-together.png" alt="Us together, 8 years ago" class="featured-photo" />
+            </div>
+            <p class="featured-photo-caption">8 years and counting... 💕</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Do You Love Me Game Section -->
+      <section id="game" class="section game-section">
+        <div class="section-content">
+          <h2 class="section-title" data-config="loveGame.sectionTitle">One Last Question...</h2>
+          <div id="game-container" class="game-container">
+            <p class="game-question" data-config="loveGame.question">Will you be mine forever? 💕</p>
+            <div class="game-buttons">
+              <button id="yes-button" class="game-btn yes-btn" data-config="loveGame.yesButtonText">Yes! 💕</button>
+              <button id="no-button" class="game-btn no-btn" data-config="loveGame.noButtonText">No</button>
+            </div>
+            <div id="celebration" class="celebration hidden" aria-live="polite">
+              <!-- Celebration content will be shown here -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p data-config="footer.message">Made with all my love for you 💕</p>
+      <p class="footer-signature" data-config="footer.signature">Forever yours</p>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

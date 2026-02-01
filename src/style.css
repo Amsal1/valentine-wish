@@ -1,0 +1,3982 @@
+/* Valentine Love Website - Base Styles */
+/* Requirements: 6.1 (pink/love color palette), 6.5 (romantic typography) */
+/* Requirements: 1.1 (mobile-first), 1.5 (min 16px font), 1.6 (44px touch targets) */
+
+/* ============================================
+   CSS Custom Properties (Design Tokens)
+   ============================================ */
+:root {
+  /* Primary pinks - love color palette */
+  --pink-50: #fdf2f8;
+  --pink-100: #fce7f3;
+  --pink-200: #fbcfe8;
+  --pink-300: #f9a8d4;
+  --pink-400: #f472b6;
+  --pink-500: #ec4899;
+  --pink-600: #db2777;
+  
+  /* Accent colors */
+  --red-heart: #e11d48;
+  --gold-accent: #fbbf24;
+  --white: #ffffff;
+  
+  /* Text colors */
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-light: #9ca3af;
+  
+  /* Typography - romantic fonts */
+  --font-romantic: 'Dancing Script', cursive;
+  --font-body: 'Poppins', sans-serif;
+  
+  /* Font sizes (minimum 16px base for readability - Requirement 1.5) */
+  /* All body text uses at least 16px (1rem) */
+  --font-size-xs: 0.875rem;   /* 14px - only for decorative/non-essential elements */
+  --font-size-sm: 1rem;       /* 16px - minimum readable size */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-md: 1.125rem;   /* 18px */
+  --font-size-lg: 1.25rem;    /* 20px */
+  --font-size-xl: 1.5rem;     /* 24px */
+  --font-size-2xl: 2rem;      /* 32px */
+  --font-size-3xl: 2.5rem;    /* 40px */
+  --font-size-4xl: 3rem;      /* 48px */
+  --font-size-5xl: 4rem;      /* 64px */
+  
+  /* Responsive breakpoints (mobile-first approach - Requirement 1.1) */
+  /* Base styles are for mobile, then we add media queries for larger screens */
+  --breakpoint-sm: 640px;   /* Small tablets */
+  --breakpoint-md: 768px;   /* Tablets */
+  --breakpoint-lg: 1024px;  /* Desktop */
+  --breakpoint-xl: 1280px;  /* Large desktop */
+  
+  /* Spacing - responsive values */
+  --spacing-xs: 0.25rem;    /* 4px */
+  --spacing-sm: 0.5rem;     /* 8px */
+  --spacing-md: 1rem;       /* 16px */
+  --spacing-lg: 1.5rem;     /* 24px */
+  --spacing-xl: 2rem;       /* 32px */
+  --spacing-2xl: 3rem;      /* 48px */
+  --spacing-3xl: 4rem;      /* 64px */
+  
+  /* Touch target minimum size (Requirement 1.6) */
+  /* All interactive elements must be at least 44px x 44px */
+  --touch-target-min: 44px;
+  
+  /* Container widths for responsive layouts */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(236, 72, 153, 0.3);
+  
+  /* Border radius */
+  --radius-sm: 0.25rem;     /* 4px */
+  --radius-md: 0.5rem;      /* 8px */
+  --radius-lg: 1rem;        /* 16px */
+  --radius-xl: 1.5rem;      /* 24px */
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+  
+  /* Z-index layers */
+  --z-background: -1;
+  --z-base: 0;
+  --z-content: 10;
+  --z-nav: 100;
+  --z-modal: 1000;
+  --z-floating: 1100;
+  
+  /* Grid columns for responsive layouts */
+  --grid-cols-mobile: 1;
+  --grid-cols-tablet: 2;
+  --grid-cols-desktop: 3;
+}
+
+/* ============================================
+   CSS Reset
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent font size adjustment on orientation change in iOS */
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Respect reduced motion preference (Requirement 7.6) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   Base Styles (Mobile-First - Requirement 1.1)
+   ============================================ */
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base); /* 16px minimum - Requirement 1.5 */
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--pink-50);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   Touch-Friendly Interactive Elements (Requirement 1.6)
+   All interactive elements must be at least 44px x 44px
+   ============================================ */
+
+/* Base button styles - touch-friendly */
+button,
+[role="button"],
+.btn {
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base); /* Minimum 16px */
+  cursor: pointer;
+  touch-action: manipulation; /* Prevent double-tap zoom */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Base link styles - touch-friendly */
+a {
+  color: var(--pink-500);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  /* Ensure links have adequate touch target when inline */
+}
+
+/* Standalone/navigation links need touch-friendly sizing */
+a.nav-link,
+a.btn,
+a.touch-target {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+a:hover {
+  color: var(--pink-600);
+}
+
+/* Form inputs - touch-friendly */
+input,
+textarea,
+select {
+  min-height: var(--touch-target-min);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base); /* Minimum 16px - prevents iOS zoom */
+  border: 1px solid var(--pink-200);
+  border-radius: var(--radius-md);
+  touch-action: manipulation;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--pink-400);
+  outline-offset: 2px;
+}
+
+/* Checkbox and radio - touch-friendly */
+input[type="checkbox"],
+input[type="radio"] {
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
+  cursor: pointer;
+}
+
+/* ============================================
+   Typography (Requirement 1.5 - Minimum 16px)
+   Mobile-first: base sizes for mobile, larger for desktop
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-romantic);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--pink-600);
+}
+
+/* Mobile-first heading sizes */
+h1 {
+  font-size: var(--font-size-2xl); /* 32px on mobile */
+}
+
+h2 {
+  font-size: var(--font-size-xl); /* 24px on mobile */
+}
+
+h3 {
+  font-size: var(--font-size-lg); /* 20px on mobile */
+}
+
+h4 {
+  font-size: var(--font-size-md); /* 18px on mobile */
+}
+
+h5, h6 {
+  font-size: var(--font-size-base); /* 16px minimum */
+}
+
+p {
+  font-size: var(--font-size-base); /* 16px minimum */
+  color: var(--text-secondary);
+}
+
+/* Small text - still readable at 16px */
+small,
+.text-small {
+  font-size: var(--font-size-base); /* Keep at 16px for readability */
+}
+
+/* Caption/label text - decorative only, not primary content */
+.text-caption {
+  font-size: var(--font-size-xs); /* 14px - only for non-essential decorative text */
+}
+
+/* Ensure list items have readable font size */
+li {
+  font-size: var(--font-size-base);
+}
+
+/* Tablet typography (768px+) */
+@media (min-width: 768px) {
+  h1 {
+    font-size: var(--font-size-3xl); /* 40px */
+  }
+  
+  h2 {
+    font-size: var(--font-size-2xl); /* 32px */
+  }
+  
+  h3 {
+    font-size: var(--font-size-xl); /* 24px */
+  }
+}
+
+/* Desktop typography (1024px+) */
+@media (min-width: 1024px) {
+  h1 {
+    font-size: var(--font-size-4xl); /* 48px */
+  }
+  
+  h2 {
+    font-size: var(--font-size-3xl); /* 40px */
+  }
+  
+  h3 {
+    font-size: var(--font-size-2xl); /* 32px */
+  }
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.hidden {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================
+   Responsive Container (Mobile-First)
+   ============================================ */
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+/* Tablet container */
+@media (min-width: 768px) {
+  .container {
+    max-width: var(--container-md);
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+  }
+}
+
+/* Desktop container */
+@media (min-width: 1024px) {
+  .container {
+    max-width: var(--container-lg);
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+}
+
+/* Large desktop container */
+@media (min-width: 1280px) {
+  .container {
+    max-width: var(--container-xl);
+  }
+}
+
+/* ============================================
+   Responsive Grid System (Mobile-First)
+   ============================================ */
+.grid {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+/* Single column on mobile (default) */
+.grid-responsive {
+  grid-template-columns: 1fr;
+}
+
+/* Two columns on tablet */
+@media (min-width: 768px) {
+  .grid-responsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid {
+    gap: var(--spacing-lg);
+  }
+}
+
+/* Three columns on desktop */
+@media (min-width: 1024px) {
+  .grid-responsive {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .grid {
+    gap: var(--spacing-xl);
+  }
+}
+
+/* Four columns on large desktop */
+@media (min-width: 1280px) {
+  .grid-responsive-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ============================================
+   Responsive Flex Utilities
+   ============================================ */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.gap-md {
+  gap: var(--spacing-md);
+}
+
+.gap-lg {
+  gap: var(--spacing-lg);
+}
+
+/* Stack on mobile, row on tablet+ */
+.flex-responsive {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .flex-responsive {
+    flex-direction: row;
+  }
+}
+
+/* ============================================
+   Responsive Spacing Utilities
+   ============================================ */
+.p-md {
+  padding: var(--spacing-md);
+}
+
+.p-lg {
+  padding: var(--spacing-lg);
+}
+
+.py-xl {
+  padding-top: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
+}
+
+.my-lg {
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Responsive padding - more on larger screens */
+.p-responsive {
+  padding: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .p-responsive {
+    padding: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .p-responsive {
+    padding: var(--spacing-xl);
+  }
+}
+
+/* ============================================
+   Responsive Display Utilities
+   ============================================ */
+/* Hide on mobile, show on tablet+ */
+.hide-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hide-mobile {
+    display: block;
+  }
+}
+
+/* Show on mobile, hide on tablet+ */
+.show-mobile {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .show-mobile {
+    display: none;
+  }
+}
+
+/* Hide on tablet and below, show on desktop+ */
+.hide-tablet {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hide-tablet {
+    display: block;
+  }
+}
+
+/* ============================================
+   Touch-Friendly Card Component
+   ============================================ */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-lg);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Clickable card - ensure touch-friendly */
+.card-clickable {
+  cursor: pointer;
+  min-height: var(--touch-target-min);
+}
+
+/* ============================================
+   Touch-Friendly Button Variants
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  text-align: center;
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--pink-400) 0%, var(--pink-500) 100%);
+  color: var(--white);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: var(--pink-100);
+  color: var(--pink-600);
+}
+
+.btn-secondary:hover {
+  background-color: var(--pink-200);
+}
+
+/* Large button for important CTAs */
+.btn-lg {
+  min-height: 56px;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-md);
+}
+
+/* ============================================
+   Floating Hearts Container
+   ============================================ */
+#floating-hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: var(--z-floating);
+  overflow: visible;
+}
+
+/* ============================================
+   Floating Hearts Animation
+   Requirements: 6.3 (Floating_Hearts animation in background)
+   Requirements: 7.3 (animate continuously without impacting performance)
+   Requirements: 7.6 (respect prefers-reduced-motion)
+   ============================================ */
+.floating-heart {
+  position: fixed;
+  bottom: -50px;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+  --sway-amount: 30px;
+  z-index: var(--z-floating);
+}
+
+/* Floating heart rise animation - floats up from bottom with gentle sway */
+@keyframes floatingHeartRise {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateY(-25vh) translateX(calc(var(--sway-amount) * -1)) rotate(-10deg);
+  }
+  50% {
+    transform: translateY(-50vh) translateX(var(--sway-amount)) rotate(10deg);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(-75vh) translateX(calc(var(--sway-amount) * -0.5)) rotate(-5deg);
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-110vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+/* Reduced motion - disable floating hearts animation (Requirement 7.6) */
+@media (prefers-reduced-motion: reduce) {
+  .floating-heart {
+    animation: none !important;
+    display: none;
+  }
+}
+
+/* ============================================
+   Navigation Styles
+   Requirements: 2.3 (accessible on all screen sizes), 2.4 (hamburger menu on mobile)
+   ============================================ */
+.main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  box-shadow: var(--shadow-sm);
+  z-index: var(--z-nav);
+  transition: box-shadow var(--transition-base);
+}
+
+/* Enhanced shadow when scrolled */
+.main-nav.is-scrolled {
+  box-shadow: var(--shadow-md);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--breakpoint-xl);
+  margin: 0 auto;
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.nav-logo {
+  font-size: var(--font-size-xl);
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform var(--transition-fast);
+}
+
+.nav-logo:hover {
+  transform: scale(1.1);
+}
+
+/* ============================================
+   Hamburger Menu Button (Mobile)
+   Requirement: 2.4 - Collapse into hamburger menu on mobile
+   ============================================ */
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+  position: relative;
+}
+
+.nav-toggle:hover {
+  background-color: var(--pink-50);
+}
+
+.nav-toggle:focus {
+  outline: 2px solid var(--pink-400);
+  outline-offset: 2px;
+}
+
+/* Hamburger lines base styles */
+.hamburger-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--pink-500);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-base) ease-in-out,
+              opacity var(--transition-base) ease-in-out,
+              background-color var(--transition-fast);
+  transform-origin: center;
+}
+
+/* Hamburger to X animation when menu is open */
+.nav-toggle.is-active .hamburger-line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.nav-toggle.is-active .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-toggle.is-active .hamburger-line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Change hamburger color when active */
+.nav-toggle.is-active .hamburger-line {
+  background-color: var(--pink-600);
+}
+
+/* ============================================
+   Navigation Menu (Mobile-First)
+   ============================================ */
+.nav-menu {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  box-shadow: var(--shadow-lg);
+  list-style: none;
+  padding: var(--spacing-sm);
+  margin: 0;
+  border-top: 1px solid var(--pink-100);
+  /* Slide down animation */
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity var(--transition-base) ease-out,
+              transform var(--transition-base) ease-out;
+}
+
+.nav-menu.is-open {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  animation: slideDown var(--transition-base) ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-menu li {
+  margin: 0;
+}
+
+/* ============================================
+   Navigation Links with Active Highlighting
+   Requirement: 2.5 - Indicate current active section
+   ============================================ */
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md);
+  min-height: var(--touch-target-min);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 400;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast),
+              background-color var(--transition-fast),
+              transform var(--transition-fast),
+              font-weight var(--transition-fast);
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--pink-600);
+  background-color: var(--pink-50);
+  transform: translateX(4px);
+}
+
+.nav-link:focus {
+  outline: 2px solid var(--pink-400);
+  outline-offset: 2px;
+}
+
+/* Active link highlighting with pink theme */
+.nav-link.active {
+  color: var(--pink-600);
+  background-color: var(--pink-100);
+  font-weight: 500;
+}
+
+/* Active indicator line (mobile) */
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  background: linear-gradient(180deg, var(--pink-400) 0%, var(--pink-500) 100%);
+  border-radius: var(--radius-full);
+}
+
+/* ============================================
+   Desktop Navigation (768px+)
+   Requirement: 2.3 - Accessible on all screen sizes
+   ============================================ */
+@media (min-width: 768px) {
+  .nav-toggle {
+    display: none;
+  }
+  
+  .nav-menu {
+    display: flex;
+    flex-direction: row;
+    position: static;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    gap: var(--spacing-xs);
+    border-top: none;
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  
+  .nav-link {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-lg);
+    position: relative;
+  }
+  
+  .nav-link:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Desktop active indicator - underline style */
+  .nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 4px;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--pink-400) 0%, var(--pink-500) 100%);
+    border-radius: var(--radius-full);
+    top: auto;
+  }
+  
+  /* Hover underline effect for non-active links */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 4px;
+    transform: translateX(-50%) scaleX(0);
+    width: 60%;
+    height: 2px;
+    background-color: var(--pink-300);
+    border-radius: var(--radius-full);
+    transition: transform var(--transition-fast);
+  }
+  
+  .nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+  
+  /* Hide hover underline when link is active */
+  .nav-link.active::after {
+    display: none;
+  }
+}
+
+/* ============================================
+   Large Desktop Navigation (1024px+)
+   ============================================ */
+@media (min-width: 1024px) {
+  .nav-container {
+    padding: var(--spacing-md) var(--spacing-xl);
+  }
+  
+  .nav-link {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-base);
+  }
+  
+  .nav-menu {
+    gap: var(--spacing-sm);
+  }
+}
+
+/* ============================================
+   Section Base Styles (Mobile-First)
+   ============================================ */
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-2xl) var(--spacing-md); /* Mobile padding */
+  padding-top: calc(var(--spacing-2xl) + 60px); /* Account for fixed nav */
+}
+
+.section-content {
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+}
+
+.section-title {
+  font-size: var(--font-size-xl); /* Mobile: 24px */
+  margin-bottom: var(--spacing-md);
+  color: var(--pink-600);
+}
+
+.section-subtitle {
+  font-size: var(--font-size-base); /* 16px minimum */
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* ============================================
+   Hero Section (Mobile-First)
+   Requirements: 6.1 (pink theme), 6.4 (welcome animation), 6.5 (romantic typography)
+   Requirements: 1.2 (mobile), 1.3 (tablet), 1.4 (desktop) - Responsive layout
+   ============================================ */
+.hero-section {
+  /* Full viewport height on all devices */
+  min-height: 100vh;
+  height: 100vh;
+  
+  /* Centered content using flexbox */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  /* Pink gradient background - Requirement 6.1 */
+  background: linear-gradient(
+    135deg,
+    var(--pink-50) 0%,
+    var(--pink-100) 25%,
+    var(--pink-200) 50%,
+    var(--pink-100) 75%,
+    var(--pink-50) 100%
+  );
+  
+  /* Positioning for decorative elements */
+  position: relative;
+  overflow: hidden;
+  
+  /* Mobile padding - single column layout (Requirement 1.2) */
+  padding: var(--spacing-xl) var(--spacing-md);
+  padding-top: calc(var(--spacing-xl) + 60px); /* Account for fixed nav */
+  
+  /* Ensure text is readable on gradient */
+  text-align: center;
+}
+
+/* Hero section content wrapper - centered */
+.hero-section .section-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: 100%;
+  width: 100%;
+  padding: var(--spacing-md);
+}
+
+/* Decorative background hearts */
+.hero-section::before {
+  content: '💕';
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  font-size: 3rem;
+  opacity: 0.15;
+  animation: floatHeart 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-section::after {
+  content: '💗';
+  position: absolute;
+  bottom: 15%;
+  right: 8%;
+  font-size: 2.5rem;
+  opacity: 0.15;
+  animation: floatHeart 8s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+/* Additional decorative hearts for larger screens */
+@media (min-width: 768px) {
+  .hero-section::before {
+    font-size: 4rem;
+    top: 15%;
+    left: 10%;
+  }
+  
+  .hero-section::after {
+    font-size: 3.5rem;
+    bottom: 20%;
+    right: 12%;
+  }
+}
+
+@keyframes floatHeart {
+  0%, 100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+/* ============================================
+   Hero Title - Romantic Typography (Requirement 6.5)
+   Uses Dancing Script cursive font for romantic feel
+   ============================================ */
+.hero-title {
+  /* Romantic typography - Dancing Script */
+  font-family: var(--font-romantic);
+  font-weight: 600;
+  
+  /* Mobile font size: 32px (Requirement 1.2) */
+  font-size: var(--font-size-2xl);
+  
+  /* Pink theme color (Requirement 6.1) */
+  color: var(--pink-600);
+  
+  /* Spacing */
+  margin-bottom: var(--spacing-md);
+  
+  /* Romantic text shadow */
+  text-shadow: 2px 2px 4px rgba(236, 72, 153, 0.15);
+  
+  /* Animation */
+  animation: fadeInUp var(--transition-slow) ease-out;
+  
+  /* Line height for readability */
+  line-height: 1.3;
+  
+  /* Prevent text overflow on mobile */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ============================================
+   Hero Subtitle - Romantic Typography
+   ============================================ */
+.hero-subtitle {
+  /* Body font for readability */
+  font-family: var(--font-body);
+  
+  /* Mobile font size: 18px (Requirement 1.5 - min 16px) */
+  font-size: var(--font-size-md);
+  
+  /* Pink theme color */
+  color: var(--pink-500);
+  
+  /* Spacing */
+  margin-bottom: var(--spacing-2xl);
+  
+  /* Romantic italic style */
+  font-style: italic;
+  font-weight: 400;
+  
+  /* Animation with delay */
+  animation: fadeInUp var(--transition-slow) ease-out 0.2s both;
+  
+  /* Line height for readability */
+  line-height: 1.6;
+  
+  /* Max width for better readability on large screens */
+  max-width: 600px;
+}
+
+/* ============================================
+   Scroll Indicator - Touch-Friendly
+   ============================================ */
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  
+  /* Animation with delay */
+  animation: fadeInUp var(--transition-slow) ease-out 0.4s both;
+  
+  /* Touch-friendly tap target (Requirement 1.6) */
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  padding: var(--spacing-sm);
+  
+  /* Interactive styling */
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+  border-radius: var(--radius-lg);
+  
+  /* Position at bottom of hero */
+  margin-top: auto;
+  padding-top: var(--spacing-xl);
+}
+
+.scroll-indicator:hover {
+  transform: translateY(-3px);
+}
+
+.scroll-indicator:focus {
+  outline: 2px solid var(--pink-400);
+  outline-offset: 4px;
+}
+
+.scroll-arrow {
+  /* Size and centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  
+  /* Font size */
+  font-size: var(--font-size-xl);
+  
+  /* Pink theme */
+  color: var(--pink-400);
+  
+  /* Background styling */
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  
+  /* Bounce animation */
+  animation: bounce 2s infinite;
+}
+
+.scroll-text {
+  /* Minimum readable font size (Requirement 1.5) */
+  font-size: var(--font-size-base);
+  
+  /* Pink theme */
+  color: var(--pink-400);
+  font-weight: 500;
+  
+  /* Spacing */
+  letter-spacing: 0.5px;
+}
+
+/* ============================================
+   Hero Animation Classes (JavaScript-controlled)
+   ============================================ */
+.hero-animate-in {
+  opacity: 0;
+  animation: heroFadeInUp 0.8s ease-out forwards;
+}
+
+.hero-animated {
+  opacity: 1;
+}
+
+@keyframes heroFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Sparkle effect for title */
+.hero-sparkle {
+  animation: sparkle 1s ease-in-out;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    text-shadow: 2px 2px 4px rgba(236, 72, 153, 0.15);
+  }
+  25% {
+    text-shadow: 0 0 20px rgba(236, 72, 153, 0.5), 0 0 40px rgba(251, 191, 36, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(236, 72, 153, 0.6), 0 0 60px rgba(251, 191, 36, 0.4);
+  }
+  75% {
+    text-shadow: 0 0 20px rgba(236, 72, 153, 0.5), 0 0 40px rgba(251, 191, 36, 0.3);
+  }
+}
+
+/* ============================================
+   Hero Section Responsive Styles
+   ============================================ */
+
+/* Tablet (768px+) - Requirement 1.3 */
+@media (min-width: 768px) {
+  .hero-section {
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    padding-top: calc(var(--spacing-2xl) + 60px);
+  }
+  
+  .hero-section .section-content {
+    max-width: var(--container-md);
+    padding: var(--spacing-lg);
+  }
+  
+  .hero-title {
+    /* Tablet font size: 48px */
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .hero-subtitle {
+    /* Tablet font size: 20px */
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
+  
+  .scroll-arrow {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Desktop (1024px+) - Requirement 1.4 */
+@media (min-width: 1024px) {
+  .hero-section {
+    padding: var(--spacing-3xl) var(--spacing-2xl);
+    padding-top: calc(var(--spacing-3xl) + 60px);
+  }
+  
+  .hero-section .section-content {
+    max-width: var(--container-lg);
+    padding: var(--spacing-xl);
+  }
+  
+  .hero-title {
+    /* Desktop font size: 64px */
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--spacing-xl);
+    /* Enhanced text shadow for larger text */
+    text-shadow: 3px 3px 6px rgba(236, 72, 153, 0.15);
+  }
+  
+  .hero-subtitle {
+    /* Desktop font size: 24px */
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-3xl);
+    max-width: 700px;
+  }
+  
+  .scroll-arrow {
+    width: 52px;
+    height: 52px;
+    font-size: var(--font-size-2xl);
+  }
+  
+  .scroll-text {
+    font-size: var(--font-size-md);
+  }
+}
+
+/* Large Desktop (1280px+) */
+@media (min-width: 1280px) {
+  .hero-section .section-content {
+    max-width: var(--container-xl);
+  }
+  
+  .hero-subtitle {
+    max-width: 800px;
+  }
+}
+
+/* ============================================
+   Reasons Section
+   Requirements: 3.5 (stack cards vertically on mobile), 3.6 (romantic typography, pink/love color scheme)
+   Requirements: 1.2 (mobile < 768px), 1.3 (tablet 768-1024px), 1.4 (desktop > 1024px)
+   ============================================ */
+.reasons-section {
+  /* Pink gradient background for romantic feel - Requirement 3.6 */
+  background: linear-gradient(
+    180deg,
+    var(--white) 0%,
+    var(--pink-50) 30%,
+    var(--pink-100) 70%,
+    var(--pink-50) 100%
+  );
+  
+  /* Section padding - mobile first */
+  padding: var(--spacing-2xl) var(--spacing-md);
+  padding-top: calc(var(--spacing-2xl) + 60px); /* Account for fixed nav */
+  
+  /* Minimum height for visual impact */
+  min-height: 100vh;
+  
+  /* Positioning for decorative elements */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Section title styling - romantic typography (Requirement 3.6) */
+.reasons-section .section-title {
+  font-family: var(--font-romantic);
+  color: var(--pink-600);
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  text-shadow: 1px 1px 2px rgba(236, 72, 153, 0.1);
+}
+
+/* Section subtitle */
+.reasons-section .section-subtitle {
+  font-family: var(--font-body);
+  color: var(--pink-500);
+  text-align: center;
+  font-style: italic;
+  margin-bottom: var(--spacing-2xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================
+   Reasons Grid - Responsive Layout
+   Requirement 1.2: Mobile (< 768px) - single column
+   Requirement 1.3: Tablet (768px-1024px) - 2 columns
+   Requirement 1.4: Desktop (> 1024px) - 3 columns
+   Requirement 3.5: Stack cards vertically on mobile
+   ============================================ */
+.reasons-grid {
+  display: grid;
+  
+  /* Mobile: Single column layout (Requirement 1.2, 3.5) */
+  grid-template-columns: 1fr;
+  
+  /* Spacing between cards */
+  gap: var(--spacing-lg);
+  
+  /* Container padding */
+  padding: var(--spacing-md);
+  
+  /* Max width for better readability */
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  
+  /* Ensure grid items are centered */
+  justify-items: center;
+}
+
+/* ============================================
+   Reason Card - Base Styles
+   Requirement 3.2: Visually appealing design
+   Requirement 3.6: Romantic typography and pink/love color scheme
+   ============================================ */
+.reason-card {
+  /* Card dimensions */
+  width: 100%;
+  max-width: 350px;
+  
+  /* Touch-friendly minimum size (Requirement 1.6) */
+  min-height: var(--touch-target-min);
+  
+  /* Card styling with shadows and borders */
+  background: var(--white);
+  border: 2px solid var(--pink-200);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  
+  /* Padding for content */
+  padding: var(--spacing-xl) var(--spacing-lg);
+  
+  /* Flexbox for centering content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--spacing-md);
+  
+  /* Smooth transitions for hover effects */
+  transition: 
+    transform var(--transition-base) ease-out,
+    box-shadow var(--transition-base) ease-out,
+    border-color var(--transition-base) ease-out,
+    background-color var(--transition-base) ease-out;
+  
+  /* Cursor for interactivity */
+  cursor: pointer;
+  
+  /* Accessibility - focusable */
+  outline: none;
+  
+  /* Animation for entrance */
+  animation: reasonCardFadeIn var(--transition-slow) ease-out both;
+  
+  /* Position for pseudo-elements */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Entrance animation for cards */
+@keyframes reasonCardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Focus state for accessibility */
+.reason-card:focus {
+  outline: 3px solid var(--pink-400);
+  outline-offset: 3px;
+}
+
+/* Decorative heart accent on cards */
+.reason-card::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--pink-100) 0%, var(--pink-200) 100%);
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+  pointer-events: none;
+}
+
+/* ============================================
+   Reason Card Icon
+   ============================================ */
+.reason-card__icon {
+  /* Icon size */
+  font-size: var(--font-size-3xl);
+  
+  /* Spacing */
+  margin-bottom: var(--spacing-sm);
+  
+  /* Animation */
+  transition: transform var(--transition-base);
+  
+  /* Prevent selection */
+  user-select: none;
+  
+  /* Display */
+  display: block;
+  line-height: 1;
+}
+
+/* ============================================
+   Reason Card Text
+   Requirement 3.6: Romantic typography
+   ============================================ */
+.reason-card__text {
+  /* Romantic typography */
+  font-family: var(--font-romantic);
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  
+  /* Pink color scheme */
+  color: var(--pink-600);
+  
+  /* Line height for readability */
+  line-height: 1.4;
+  
+  /* Minimum font size compliance (Requirement 1.5) */
+  min-height: auto;
+  
+  /* Text styling */
+  letter-spacing: 0.5px;
+}
+
+/* Reason Card Description (hidden by default, shown on click) */
+.reason-card__description {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: var(--spacing-sm);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+
+/* Reason Card Hint */
+.reason-card__hint {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--pink-400);
+  margin-top: var(--spacing-xs);
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+/* Expanded state */
+.reason-card--expanded .reason-card__description {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: var(--spacing-md);
+}
+
+.reason-card--expanded .reason-card__hint {
+  opacity: 0;
+  display: none;
+}
+
+/* ============================================
+   Reason Card Hover Effect Variants
+   Requirement 3.4: Subtle animation effect on hover
+   ============================================ */
+
+/* Scale Effect Variant */
+.reason-card--scale:hover,
+.reason-card--scale.reason-card--hover-scale {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--pink-300);
+}
+
+.reason-card--scale:hover::before,
+.reason-card--scale.reason-card--hover-scale::before {
+  transform: scale(1.3);
+  opacity: 0.7;
+}
+
+.reason-card--scale:hover .reason-card__icon,
+.reason-card--scale.reason-card--hover-scale .reason-card__icon {
+  transform: scale(1.2);
+}
+
+/* Glow Effect Variant */
+.reason-card--glow:hover,
+.reason-card--glow.reason-card--hover-glow {
+  box-shadow: 
+    var(--shadow-lg),
+    0 0 30px rgba(236, 72, 153, 0.3),
+    0 0 60px rgba(236, 72, 153, 0.15);
+  border-color: var(--pink-400);
+  background: linear-gradient(135deg, var(--white) 0%, var(--pink-50) 100%);
+}
+
+.reason-card--glow:hover::before,
+.reason-card--glow.reason-card--hover-glow::before {
+  opacity: 0.8;
+  background: linear-gradient(135deg, var(--pink-200) 0%, var(--pink-300) 100%);
+}
+
+.reason-card--glow:hover .reason-card__icon,
+.reason-card--glow.reason-card--hover-glow .reason-card__icon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.5));
+}
+
+.reason-card--glow:hover .reason-card__text,
+.reason-card--glow.reason-card--hover-glow .reason-card__text {
+  color: var(--pink-500);
+  text-shadow: 0 0 10px rgba(236, 72, 153, 0.2);
+}
+
+/* Float Effect Variant */
+.reason-card--float:hover,
+.reason-card--float.reason-card--hover-float {
+  transform: translateY(-10px);
+  box-shadow: 
+    var(--shadow-xl),
+    0 20px 40px rgba(236, 72, 153, 0.15);
+  border-color: var(--pink-300);
+}
+
+.reason-card--float:hover::before,
+.reason-card--float.reason-card--hover-float::before {
+  transform: translateY(-5px) scale(1.2);
+  opacity: 0.6;
+}
+
+.reason-card--float:hover .reason-card__icon,
+.reason-card--float.reason-card--hover-float .reason-card__icon {
+  animation: floatIcon 1s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* ============================================
+   Reason Card Active/Pressed State
+   ============================================ */
+.reason-card:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ============================================
+   Reasons Section Responsive Styles
+   ============================================ */
+
+/* Tablet (768px+) - Requirement 1.3: 2 columns */
+@media (min-width: 768px) {
+  .reasons-section {
+    padding: var(--spacing-3xl) var(--spacing-xl);
+    padding-top: calc(var(--spacing-3xl) + 60px);
+  }
+  
+  .reasons-grid {
+    /* 2 column layout for tablet */
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    max-width: var(--container-lg);
+  }
+  
+  .reason-card {
+    max-width: 100%;
+    padding: var(--spacing-xl);
+  }
+  
+  .reason-card__icon {
+    font-size: var(--font-size-4xl);
+  }
+  
+  .reason-card__text {
+    font-size: var(--font-size-xl);
+  }
+  
+  .reasons-section .section-title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .reasons-section .section-subtitle {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-2xl);
+  }
+}
+
+/* Desktop (1024px+) - Requirement 1.4: 3 columns */
+@media (min-width: 1024px) {
+  .reasons-section {
+    padding: var(--spacing-3xl) var(--spacing-2xl);
+    padding-top: calc(var(--spacing-3xl) + 60px);
+  }
+  
+  .reasons-grid {
+    /* 3 column layout for desktop */
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    max-width: var(--container-xl);
+  }
+  
+  .reason-card {
+    padding: var(--spacing-2xl) var(--spacing-xl);
+  }
+  
+  .reason-card__icon {
+    font-size: var(--font-size-4xl);
+  }
+  
+  .reason-card__text {
+    font-size: var(--font-size-xl);
+  }
+  
+  .reasons-section .section-title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .reasons-section .section-subtitle {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-3xl);
+    max-width: 700px;
+  }
+}
+
+/* Large Desktop (1280px+) */
+@media (min-width: 1280px) {
+  .reasons-grid {
+    max-width: var(--container-xl);
+    gap: var(--spacing-2xl);
+  }
+  
+  .reason-card {
+    padding: var(--spacing-2xl);
+  }
+  
+  .reason-card__text {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* ============================================
+   Reduced Motion Support for Reasons Section
+   Requirement 7.6: Respect prefers-reduced-motion
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .reason-card {
+    animation: none;
+    transition: none;
+  }
+  
+  .reason-card::before {
+    transition: none;
+  }
+  
+  .reason-card__icon {
+    transition: none;
+    animation: none !important;
+  }
+  
+  .reason-card--scale:hover,
+  .reason-card--glow:hover,
+  .reason-card--float:hover {
+    transform: none;
+  }
+  
+  .reason-card--float:hover .reason-card__icon {
+    animation: none !important;
+  }
+}
+
+/* ============================================
+   Gallery Section
+   Requirements: 4.1 (interactive grid), 4.2 (reveal animation), 4.6 (click-to-flip)
+   ============================================ */
+.gallery-section {
+  background: linear-gradient(180deg, var(--pink-50) 0%, var(--pink-100) 100%);
+}
+
+.gallery-grid {
+  display: grid;
+  /* Mobile (< 768px): 2 columns - Requirement 4.4 */
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  max-width: var(--container-xl);
+  margin: 0 auto;
+}
+
+/* Tablet (768px - 1024px): 3 columns - Requirement 4.5 */
+@media (min-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Desktop (> 1024px): 4 columns - Requirement 4.5 */
+@media (min-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl);
+  }
+}
+
+/* Large Desktop (> 1280px): Maintain 4 columns with larger gaps */
+@media (min-width: 1280px) {
+  .gallery-grid {
+    gap: var(--spacing-2xl);
+  }
+}
+
+/* ============================================
+   Gallery Card - 3D Flip Animation
+   Requirement 4.6: Click-to-flip reveal mechanism
+   ============================================ */
+.gallery-card {
+  /* Card dimensions - square aspect ratio */
+  aspect-ratio: 1 / 1;
+  min-height: 150px;
+  width: 100%;
+  position: relative;
+  
+  /* 3D perspective for flip effect */
+  perspective: 1000px;
+  
+  /* Touch-friendly sizing (Requirement 1.6) */
+  min-width: var(--touch-target-min);
+  
+  /* Interactive styling */
+  cursor: pointer;
+  
+  /* Animation for entrance */
+  animation: fadeInUp var(--transition-slow) ease-out both;
+  
+  /* Ensure the card establishes proper containing block */
+  contain: layout style;
+}
+
+.gallery-card:focus {
+  outline: 3px solid var(--pink-400);
+  outline-offset: 4px;
+  border-radius: var(--radius-lg);
+}
+
+/* Inner container for 3D flip */
+.gallery-card__inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* Enable 3D transforms */
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Border radius */
+  border-radius: var(--radius-lg);
+}
+
+/* Flip animation when revealed */
+.gallery-card--revealed .gallery-card__inner {
+  transform: rotateY(180deg);
+}
+
+/* Front and back faces */
+.gallery-card__front,
+.gallery-card__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* Hide backface during flip */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  
+  /* Styling */
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  
+  /* Flexbox for centering content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Front face - hidden state with heart placeholder */
+.gallery-card__front {
+  background: linear-gradient(135deg, var(--pink-200) 0%, var(--pink-300) 100%);
+  box-shadow: var(--shadow-md);
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  
+  /* Hover effect */
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+  
+  /* Front face is at 0deg rotation */
+  transform: rotateY(0deg);
+  
+  /* Heart-shaped border effect */
+  overflow: hidden;
+}
+
+/* Decorative heart border overlay */
+.gallery-card__front::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 3px solid var(--pink-400);
+  border-radius: var(--radius-lg);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Romantic shimmer effect on hover */
+.gallery-card__front::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.gallery-card:hover .gallery-card__front::after {
+  transform: translateX(100%);
+}
+
+.gallery-card:hover .gallery-card__front {
+  box-shadow: var(--shadow-lg);
+}
+
+.gallery-card:not(.gallery-card--revealed):hover .gallery-card__inner {
+  transform: scale(1.02);
+}
+
+/* Heart icon on front */
+.gallery-card__heart {
+  font-size: 3rem;
+  animation: pulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(236, 72, 153, 0.3));
+}
+
+/* Heart container for romantic grouping */
+.gallery-card__heart-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  position: relative;
+}
+
+/* Decorative sparkles */
+.gallery-card__sparkle {
+  font-size: 1rem;
+  opacity: 0.8;
+  animation: sparkleFloat 3s ease-in-out infinite;
+}
+
+.gallery-card__sparkle--1 {
+  animation-delay: 0s;
+}
+
+.gallery-card__sparkle--2 {
+  animation-delay: 1.5s;
+}
+
+@keyframes sparkleFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-5px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Hint text on front */
+.gallery-card__hint {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--pink-600);
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* Romantic hint subtext */
+.gallery-card__hint-subtext {
+  font-family: var(--font-romantic);
+  font-size: var(--font-size-sm);
+  color: var(--pink-500);
+  font-style: italic;
+  text-align: center;
+  opacity: 0.9;
+  padding-bottom: 0.5rem;
+}
+
+/* Back face - revealed state with photo */
+.gallery-card__back {
+  background-color: var(--white);
+  box-shadow: var(--shadow-lg);
+  
+  /* Rotate to show when flipped */
+  transform: rotateY(180deg);
+}
+
+/* Photo image */
+.gallery-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+/* Placeholder for missing photos */
+.gallery-card__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--pink-100) 0%, var(--pink-200) 100%);
+  padding: var(--spacing-md);
+}
+
+/* Error state placeholder with romantic styling */
+.gallery-card__placeholder--error {
+  background: linear-gradient(
+    135deg,
+    var(--pink-50) 0%,
+    var(--pink-100) 50%,
+    var(--pink-50) 100%
+  );
+  position: relative;
+}
+
+/* Decorative border for error placeholder */
+.gallery-card__placeholder--error::before {
+  content: '';
+  position: absolute;
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+  right: var(--spacing-sm);
+  bottom: var(--spacing-sm);
+  border: 2px dashed var(--pink-300);
+  border-radius: var(--radius-md);
+  pointer-events: none;
+}
+
+.gallery-card__placeholder-icon {
+  font-size: 2.5rem;
+  opacity: 0.9;
+  animation: gentlePulse 3s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.gallery-card__placeholder-text {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--pink-500);
+  text-align: center;
+  font-weight: 500;
+}
+
+.gallery-card__placeholder-subtext {
+  font-family: var(--font-romantic);
+  font-size: var(--font-size-sm);
+  color: var(--pink-400);
+  text-align: center;
+  font-style: italic;
+}
+
+/* ============================================
+   Empty Gallery State
+   Requirement 4.7: Display romantic placeholder content when no photos
+   ============================================ */
+.gallery-empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(252, 231, 243, 0.6) 50%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  border-radius: var(--radius-xl);
+  border: 2px dashed var(--pink-300);
+  min-height: 300px;
+  animation: fadeInUp var(--transition-slow) ease-out;
+}
+
+.gallery-empty-state__icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-lg);
+  animation: floatHeart 4s ease-in-out infinite;
+}
+
+@keyframes floatHeart {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  25% {
+    transform: translateY(-10px) scale(1.05);
+  }
+  50% {
+    transform: translateY(-5px) scale(1);
+  }
+  75% {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+
+.gallery-empty-state__title {
+  font-family: var(--font-romantic);
+  font-size: var(--font-size-2xl);
+  color: var(--pink-600);
+  margin-bottom: var(--spacing-md);
+}
+
+.gallery-empty-state__message {
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  color: var(--pink-500);
+  max-width: 400px;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-sm);
+}
+
+.gallery-empty-state__hint {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  color: var(--pink-400);
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Reduced motion - instant reveal without flip */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-card__inner {
+    transition: none;
+  }
+  
+  .gallery-card--revealed .gallery-card__inner {
+    transform: none;
+  }
+  
+  .gallery-card--revealed .gallery-card__front {
+    display: none;
+  }
+  
+  .gallery-card--revealed .gallery-card__back {
+    transform: none;
+  }
+  
+  .gallery-card__heart {
+    animation: none;
+  }
+  
+  .gallery-card__sparkle {
+    animation: none;
+  }
+  
+  .gallery-card__placeholder-icon {
+    animation: none;
+  }
+  
+  .gallery-empty-state__icon {
+    animation: none;
+  }
+  
+  .gallery-card__front::after {
+    display: none;
+  }
+  
+  .gallery-card:not(.gallery-card--revealed):hover .gallery-card__inner {
+    transform: none;
+  }
+}
+
+/* ============================================
+   Gallery Responsive Card Styles
+   Requirements: 1.2 (mobile), 1.3 (tablet), 1.4 (desktop)
+   ============================================ */
+
+/* Tablet (768px+): Larger cards with enhanced effects */
+@media (min-width: 768px) {
+  .gallery-card {
+    min-height: 180px;
+  }
+  
+  .gallery-card__heart {
+    font-size: 3.5rem;
+  }
+  
+  .gallery-card__hint {
+    font-size: var(--font-size-md);
+  }
+  
+  .gallery-card__placeholder-icon {
+    font-size: 3rem;
+  }
+  
+  .gallery-empty-state {
+    padding: var(--spacing-3xl);
+    min-height: 350px;
+  }
+  
+  .gallery-empty-state__icon {
+    font-size: 5rem;
+  }
+  
+  .gallery-empty-state__title {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+/* Desktop (1024px+): Full-size cards with premium effects */
+@media (min-width: 1024px) {
+  .gallery-card {
+    min-height: 200px;
+  }
+  
+  .gallery-card__heart {
+    font-size: 4rem;
+  }
+  
+  .gallery-card__sparkle {
+    font-size: 1.25rem;
+  }
+  
+  .gallery-card__hint {
+    font-size: var(--font-size-lg);
+  }
+  
+  .gallery-card__hint-subtext {
+    font-size: var(--font-size-base);
+  }
+  
+  .gallery-card__placeholder-icon {
+    font-size: 3.5rem;
+  }
+  
+  .gallery-card__placeholder-text {
+    font-size: var(--font-size-md);
+  }
+  
+  .gallery-empty-state {
+    padding: var(--spacing-3xl) var(--spacing-2xl);
+    min-height: 400px;
+  }
+  
+  .gallery-empty-state__icon {
+    font-size: 6rem;
+  }
+}
+
+/* Large Desktop (1280px+): Extra polish */
+@media (min-width: 1280px) {
+  .gallery-card {
+    min-height: 220px;
+  }
+  
+  .gallery-card__inner {
+    /* Slightly longer flip animation for larger cards */
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* ============================================
+   Featured Memory Section - Special Photo
+   ============================================ */
+.featured-memory-section {
+  background: linear-gradient(180deg, var(--pink-100) 0%, var(--pink-50) 100%);
+  padding: var(--spacing-2xl) var(--spacing-md);
+}
+
+.featured-photo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--spacing-xl);
+}
+
+.featured-photo-frame {
+  position: relative;
+  padding: var(--spacing-md);
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: 
+    0 10px 40px rgba(236, 72, 153, 0.2),
+    0 0 0 4px var(--pink-200);
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+  max-width: 320px;
+  width: 100%;
+}
+
+.featured-photo-frame:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.featured-photo {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  display: block;
+}
+
+.featured-photo-caption {
+  margin-top: var(--spacing-lg);
+  font-family: var(--font-romantic);
+  font-size: var(--font-size-xl);
+  color: var(--pink-600);
+  text-align: center;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .featured-photo-frame {
+    max-width: 400px;
+    padding: var(--spacing-lg);
+  }
+  
+  .featured-photo-caption {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .featured-photo-frame {
+    max-width: 480px;
+  }
+}
+
+/* ============================================
+   Love Game Section (Do You Love Me?)
+   Requirements: 5.6 (mobile touch adaptations)
+   Requirements: 1.2 (mobile < 768px), 1.3 (tablet 768-1024px), 1.4 (desktop > 1024px)
+   Requirements: 1.6 (44px touch targets)
+   ============================================ */
+.game-section {
+  /* Romantic gradient background */
+  background: linear-gradient(
+    180deg,
+    var(--pink-50) 0%,
+    var(--white) 30%,
+    var(--pink-50) 70%,
+    var(--pink-100) 100%
+  );
+  
+  /* Section padding - mobile first */
+  padding: var(--spacing-2xl) var(--spacing-md);
+  padding-top: calc(var(--spacing-2xl) + 60px); /* Account for fixed nav */
+  
+  /* Minimum height for visual impact */
+  min-height: 100vh;
+  
+  /* Flexbox for centering */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  /* Positioning for decorative elements */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative background hearts */
+.game-section::before {
+  content: '💕';
+  position: absolute;
+  top: 15%;
+  left: 8%;
+  font-size: 2.5rem;
+  opacity: 0.12;
+  animation: floatHeart 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.game-section::after {
+  content: '💗';
+  position: absolute;
+  bottom: 20%;
+  right: 10%;
+  font-size: 2rem;
+  opacity: 0.12;
+  animation: floatHeart 9s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+/* ============================================
+   Game Container - Centered Layout
+   ============================================ */
+.game-container {
+  /* Flexbox for centering question and buttons */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+  /* Spacing between elements */
+  gap: var(--spacing-xl);
+  
+  /* Container padding */
+  padding: var(--spacing-xl) var(--spacing-md);
+  
+  /* Container sizing */
+  width: 100%;
+  max-width: 500px;
+  
+  /* Minimum height for No button evasion area */
+  min-height: 300px;
+  
+  /* Position relative for absolute No button positioning */
+  position: relative;
+  
+  /* Background card styling */
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--pink-200);
+  
+  /* Entrance animation */
+  animation: gameContainerFadeIn var(--transition-slow) ease-out;
+}
+
+@keyframes gameContainerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================
+   Game Question - "Do You Love Me?"
+   Centered with romantic typography
+   ============================================ */
+.game-question {
+  /* Romantic typography */
+  font-family: var(--font-romantic);
+  font-weight: 600;
+  
+  /* Mobile font size (Requirement 1.5 - min 16px) */
+  font-size: var(--font-size-2xl); /* 32px */
+  
+  /* Pink theme color */
+  color: var(--pink-600);
+  
+  /* Text shadow for emphasis */
+  text-shadow: 1px 1px 2px rgba(236, 72, 153, 0.15);
+  
+  /* Spacing */
+  margin: 0;
+  padding: var(--spacing-md) 0;
+  
+  /* Line height for readability */
+  line-height: 1.3;
+  
+  /* Center text */
+  text-align: center;
+  
+  /* Animation */
+  animation: questionPulse 3s ease-in-out infinite;
+}
+
+@keyframes questionPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* ============================================
+   Pleading Message (shown when No button is evaded)
+   Hinglish/casual messages for fun
+   ============================================ */
+.pleading-message {
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  color: var(--pink-500);
+  text-align: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-top: var(--spacing-md);
+  background: linear-gradient(135deg, var(--pink-50) 0%, var(--pink-100) 100%);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--pink-300);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.pleading-message--animate {
+  opacity: 1;
+  transform: translateY(0);
+  animation: pleadingBounce 0.5s ease-out;
+}
+
+@keyframes pleadingBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.8);
+  }
+  50% {
+    transform: translateY(5px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================
+   Game Buttons Container
+   Centered with proper spacing
+   ============================================ */
+.game-buttons {
+  /* Flexbox for centering buttons */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  
+  /* Spacing between buttons */
+  gap: var(--spacing-lg);
+  
+  /* Allow wrapping on very small screens */
+  flex-wrap: wrap;
+  
+  /* Padding for touch area */
+  padding: var(--spacing-md);
+  
+  /* Full width for button positioning */
+  width: 100%;
+}
+
+/* ============================================
+   Base Game Button Styles
+   Touch-friendly sizing (Requirement 1.6 - 44px minimum)
+   ============================================ */
+.game-btn {
+  /* Typography */
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--font-size-md); /* 18px */
+  
+  /* Touch-friendly sizing (Requirement 1.6) */
+  min-width: var(--touch-target-min); /* 44px */
+  min-height: var(--touch-target-min); /* 44px */
+  
+  /* Padding for comfortable touch */
+  padding: var(--spacing-md) var(--spacing-xl);
+  
+  /* Border and shape */
+  border: none;
+  border-radius: var(--radius-lg);
+  
+  /* Cursor */
+  cursor: pointer;
+  
+  /* Touch optimization */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  
+  /* Transitions */
+  transition: 
+    transform var(--transition-fast) ease-out,
+    box-shadow var(--transition-fast) ease-out,
+    background-color var(--transition-fast) ease-out,
+    opacity var(--transition-fast) ease-out;
+  
+  /* Focus visible for accessibility */
+  outline: none;
+}
+
+.game-btn:focus-visible {
+  outline: 3px solid var(--pink-400);
+  outline-offset: 3px;
+}
+
+/* ============================================
+   Yes Button - Inviting, Prominent, Pink
+   Larger and more prominent to encourage clicking
+   ============================================ */
+.yes-btn {
+  /* Larger size - more inviting */
+  min-width: 140px;
+  min-height: 56px;
+  padding: var(--spacing-md) var(--spacing-2xl);
+  
+  /* Larger font for prominence */
+  font-size: var(--font-size-lg); /* 20px */
+  
+  /* Romantic pink gradient background */
+  background: linear-gradient(
+    135deg,
+    var(--pink-400) 0%,
+    var(--pink-500) 50%,
+    var(--pink-600) 100%
+  );
+  
+  /* White text for contrast */
+  color: var(--white);
+  
+  /* Prominent shadow with pink glow */
+  box-shadow: 
+    var(--shadow-md),
+    0 4px 15px rgba(236, 72, 153, 0.3);
+  
+  /* Rounded pill shape */
+  border-radius: var(--radius-full);
+  
+  /* Subtle pulsing animation to draw attention */
+  animation: yesBtnPulse 2s ease-in-out infinite;
+  
+  /* Position relative for pseudo-elements */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer effect on Yes button */
+.yes-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  transition: left 0.5s ease;
+}
+
+.yes-btn:hover::before {
+  left: 100%;
+}
+
+/* Yes button pulse animation */
+@keyframes yesBtnPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 
+      var(--shadow-md),
+      0 4px 15px rgba(236, 72, 153, 0.3);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 
+      var(--shadow-lg),
+      0 6px 20px rgba(236, 72, 153, 0.4);
+  }
+}
+
+/* Yes button hover state */
+.yes-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 
+    var(--shadow-xl),
+    0 8px 25px rgba(236, 72, 153, 0.5);
+  animation: none; /* Stop pulse on hover */
+}
+
+/* Yes button active/pressed state */
+.yes-btn:active {
+  transform: scale(0.98);
+  box-shadow: 
+    var(--shadow-sm),
+    0 2px 10px rgba(236, 72, 153, 0.3);
+}
+
+/* ============================================
+   No Button - Smaller, Less Prominent, Evasive
+   Designed to be harder to click (playfully)
+   ============================================ */
+.no-btn {
+  /* Smaller size - less prominent */
+  min-width: 80px;
+  min-height: var(--touch-target-min); /* Still touch-friendly at 44px */
+  padding: var(--spacing-sm) var(--spacing-lg);
+  
+  /* Smaller font */
+  font-size: var(--font-size-base); /* 16px */
+  font-weight: 500;
+  
+  /* Subtle background */
+  background-color: var(--pink-100);
+  
+  /* Muted text color */
+  color: var(--pink-500);
+  
+  /* Subtle border */
+  border: 1px solid var(--pink-200);
+  
+  /* Minimal shadow */
+  box-shadow: var(--shadow-sm);
+  
+  /* Standard rounded corners */
+  border-radius: var(--radius-lg);
+  
+  /* No animation - less attention-grabbing */
+  animation: none;
+  
+  /* Will be positioned absolutely when evading */
+  /* Position is set dynamically by JavaScript */
+}
+
+/* No button hover state */
+.no-btn:hover {
+  background-color: var(--pink-200);
+  border-color: var(--pink-300);
+  color: var(--pink-600);
+  /* No scale transform - button will evade instead */
+}
+
+/* No button active/pressed state */
+.no-btn:active {
+  background-color: var(--pink-300);
+  transform: scale(0.95);
+}
+
+/* ============================================
+   Game Section Responsive Styles
+   ============================================ */
+
+/* Tablet (768px+) - Requirement 1.3 */
+@media (min-width: 768px) {
+  .game-section {
+    padding: var(--spacing-3xl) var(--spacing-xl);
+    padding-top: calc(var(--spacing-3xl) + 60px);
+  }
+  
+  .game-section::before {
+    font-size: 3.5rem;
+    top: 12%;
+    left: 12%;
+  }
+  
+  .game-section::after {
+    font-size: 3rem;
+    bottom: 15%;
+    right: 15%;
+  }
+  
+  .game-container {
+    max-width: 550px;
+    min-height: 350px;
+    padding: var(--spacing-2xl);
+    gap: var(--spacing-2xl);
+  }
+  
+  .game-question {
+    font-size: var(--font-size-3xl); /* 40px */
+    padding: var(--spacing-lg) 0;
+  }
+  
+  .game-buttons {
+    gap: var(--spacing-xl);
+    padding: var(--spacing-lg);
+  }
+  
+  .yes-btn {
+    min-width: 160px;
+    min-height: 60px;
+    padding: var(--spacing-lg) var(--spacing-2xl);
+    font-size: var(--font-size-xl); /* 24px */
+  }
+  
+  .no-btn {
+    min-width: 90px;
+    min-height: 48px;
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--font-size-md); /* 18px */
+  }
+}
+
+/* Desktop (1024px+) - Requirement 1.4 */
+@media (min-width: 1024px) {
+  .game-section {
+    padding: var(--spacing-3xl) var(--spacing-2xl);
+    padding-top: calc(var(--spacing-3xl) + 60px);
+  }
+  
+  .game-section::before {
+    font-size: 4rem;
+    top: 10%;
+    left: 15%;
+  }
+  
+  .game-section::after {
+    font-size: 3.5rem;
+    bottom: 12%;
+    right: 18%;
+  }
+  
+  .game-container {
+    max-width: 600px;
+    min-height: 400px;
+    padding: var(--spacing-2xl) var(--spacing-3xl);
+  }
+  
+  .game-question {
+    font-size: var(--font-size-4xl); /* 48px */
+  }
+  
+  .yes-btn {
+    min-width: 180px;
+    min-height: 64px;
+    padding: var(--spacing-lg) var(--spacing-3xl);
+    font-size: var(--font-size-xl); /* 24px */
+  }
+  
+  .no-btn {
+    min-width: 100px;
+    min-height: 52px;
+    font-size: var(--font-size-md); /* 18px */
+  }
+}
+
+/* Large Desktop (1280px+) */
+@media (min-width: 1280px) {
+  .game-container {
+    max-width: 650px;
+    min-height: 450px;
+  }
+  
+  .game-question {
+    font-size: var(--font-size-5xl); /* 64px */
+  }
+  
+  .yes-btn {
+    min-width: 200px;
+    min-height: 68px;
+    font-size: var(--font-size-2xl); /* 32px */
+  }
+}
+
+/* ============================================
+   Mobile Touch Adaptations (Requirement 5.6)
+   Enhanced touch targets and feedback for mobile
+   ============================================ */
+@media (max-width: 767px) {
+  /* Ensure buttons have adequate spacing for touch */
+  .game-buttons {
+    gap: var(--spacing-xl);
+    padding: var(--spacing-lg);
+  }
+  
+  /* Larger touch area for Yes button on mobile */
+  .yes-btn {
+    min-width: 150px;
+    min-height: 52px;
+    /* Larger tap target padding */
+    padding: var(--spacing-md) var(--spacing-xl);
+  }
+  
+  /* Ensure No button is still touchable even when small */
+  .no-btn {
+    min-width: 70px;
+    min-height: var(--touch-target-min); /* 44px minimum */
+    /* Prevent accidental taps with adequate padding */
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  /* Disable hover effects on touch devices */
+  .yes-btn:hover {
+    transform: scale(1);
+    animation: yesBtnPulse 2s ease-in-out infinite;
+  }
+  
+  /* Active state provides touch feedback */
+  .yes-btn:active {
+    transform: scale(0.95);
+    animation: none;
+  }
+  
+  .no-btn:active {
+    background-color: var(--pink-200);
+    transform: scale(0.95);
+  }
+}
+
+/* Touch device detection via hover capability */
+@media (hover: none) {
+  /* Remove hover-dependent animations on touch devices */
+  .yes-btn:hover::before {
+    left: -100%; /* Don't show shimmer on touch */
+  }
+  
+  /* Ensure pulse animation continues on touch devices */
+  .yes-btn {
+    animation: yesBtnPulse 2s ease-in-out infinite;
+  }
+  
+  .yes-btn:hover {
+    transform: scale(1);
+    box-shadow: 
+      var(--shadow-md),
+      0 4px 15px rgba(236, 72, 153, 0.3);
+  }
+}
+
+/* ============================================
+   Reduced Motion Support for Game Section
+   Requirement 7.6: Respect prefers-reduced-motion
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .game-section::before,
+  .game-section::after {
+    animation: none;
+  }
+  
+  .game-container {
+    animation: none;
+  }
+  
+  .game-question {
+    animation: none;
+  }
+  
+  .yes-btn {
+    animation: none;
+    transition: none;
+  }
+  
+  .yes-btn::before {
+    display: none;
+  }
+  
+  .yes-btn:hover {
+    transform: none;
+    animation: none;
+  }
+  
+  .no-btn {
+    transition: none;
+  }
+  
+  .no-btn:hover {
+    transform: none;
+  }
+  
+  /* Keep visual feedback but without motion */
+  .yes-btn:active,
+  .no-btn:active {
+    transform: none;
+    opacity: 0.8;
+  }
+}
+
+/* ============================================
+   Celebration Animation Styles
+   Requirement 5.4: Celebratory animation (hearts explosion, confetti, romantic message)
+   Requirement 7.6: Respect prefers-reduced-motion
+   ============================================ */
+.celebration {
+  /* Container positioning */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  /* Flexbox for centering content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  /* Text alignment */
+  text-align: center;
+  
+  /* Background with romantic gradient */
+  background: linear-gradient(
+    135deg,
+    rgba(253, 242, 248, 0.95) 0%,
+    rgba(252, 231, 243, 0.95) 50%,
+    rgba(253, 242, 248, 0.95) 100%
+  );
+  
+  /* Initial hidden state */
+  opacity: 0;
+  visibility: hidden;
+  
+  /* Smooth transition for showing */
+  transition: opacity var(--transition-slow) ease-out, visibility var(--transition-slow);
+  
+  /* Ensure it's above other content */
+  z-index: var(--z-content);
+  
+  /* Overflow for particles */
+  overflow: hidden;
+  
+  /* Border radius to match container */
+  border-radius: var(--radius-lg);
+}
+
+/* Active celebration state */
+.celebration--active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ============================================
+   Celebration Heart Particles
+   Hearts explosion effect that floats up and fades out
+   ============================================ */
+.celebration-heart {
+  /* Positioning */
+  position: absolute;
+  bottom: 0;
+  
+  /* Size */
+  font-size: 1.5rem;
+  
+  /* Animation */
+  animation: celebrationHeartFloat 2s ease-out forwards;
+  
+  /* Prevent interaction */
+  pointer-events: none;
+  user-select: none;
+  
+  /* Initial state */
+  opacity: 0;
+  
+  /* Z-index below message */
+  z-index: 1;
+}
+
+/* Heart float animation - rises up and fades out */
+@keyframes celebrationHeartFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-400px) scale(1.2) rotate(var(--heart-rotation, 15deg));
+  }
+}
+
+/* Different heart sizes and rotations for variety */
+.celebration-heart:nth-child(odd) {
+  --heart-rotation: -20deg;
+  font-size: 1.8rem;
+}
+
+.celebration-heart:nth-child(even) {
+  --heart-rotation: 25deg;
+  font-size: 1.3rem;
+}
+
+.celebration-heart:nth-child(3n) {
+  --heart-rotation: -10deg;
+  font-size: 2rem;
+}
+
+.celebration-heart:nth-child(4n) {
+  --heart-rotation: 30deg;
+  font-size: 1.6rem;
+}
+
+.celebration-heart:nth-child(5n) {
+  --heart-rotation: -30deg;
+  font-size: 2.2rem;
+}
+
+/* ============================================
+   Sparkle/Confetti Effects
+   Additional celebratory particles
+   ============================================ */
+.celebration::before,
+.celebration::after {
+  content: '✨';
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.celebration--active::before {
+  top: 20%;
+  left: 15%;
+  animation: sparkleEffect 1.5s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.celebration--active::after {
+  top: 25%;
+  right: 15%;
+  animation: sparkleEffect 1.5s ease-in-out infinite;
+  animation-delay: 0.7s;
+}
+
+@keyframes sparkleEffect {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.2) rotate(15deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1) rotate(-10deg);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+/* Additional confetti-like sparkles */
+.celebration--active .celebration-message::before,
+.celebration--active .celebration-message::after {
+  content: '💫';
+  position: absolute;
+  font-size: 1.5rem;
+  animation: confettiFloat 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.celebration--active .celebration-message::before {
+  top: -30px;
+  left: -20px;
+  animation-delay: 0s;
+}
+
+.celebration--active .celebration-message::after {
+  top: -25px;
+  right: -20px;
+  animation-delay: 0.5s;
+}
+
+@keyframes confettiFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-15px) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   Celebration Message Container
+   Romantic message that fades in smoothly
+   ============================================ */
+.celebration-message {
+  /* Positioning */
+  position: relative;
+  z-index: 10;
+  
+  /* Spacing */
+  padding: var(--spacing-xl) var(--spacing-2xl);
+  margin: var(--spacing-lg);
+  
+  /* Background styling */
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-xl);
+  box-shadow: 
+    var(--shadow-xl),
+    0 0 40px rgba(236, 72, 153, 0.2);
+  
+  /* Border accent */
+  border: 2px solid var(--pink-200);
+  
+  /* Animation - fade in and scale up */
+  animation: celebrationMessageFadeIn 0.8s ease-out forwards;
+  animation-delay: 0.3s;
+  
+  /* Initial state */
+  opacity: 0;
+  transform: scale(0.8) translateY(20px);
+  
+  /* Max width for readability */
+  max-width: 90%;
+  width: 400px;
+}
+
+@keyframes celebrationMessageFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  50% {
+    transform: scale(1.02) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ============================================
+   Celebration Title
+   "I knew it! 💕" heading
+   ============================================ */
+.celebration-title {
+  /* Romantic typography */
+  font-family: var(--font-romantic);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  
+  /* Pink theme color */
+  color: var(--pink-600);
+  
+  /* Spacing */
+  margin-bottom: var(--spacing-md);
+  
+  /* Text shadow for emphasis */
+  text-shadow: 1px 1px 2px rgba(236, 72, 153, 0.15);
+  
+  /* Animation */
+  animation: celebrationTitlePop 0.6s ease-out forwards;
+  animation-delay: 0.5s;
+  
+  /* Initial state */
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+@keyframes celebrationTitlePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   Celebration Subtitle
+   "I love you too, forever and always!" message
+   ============================================ */
+.celebration-subtitle {
+  /* Body font for readability */
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  
+  /* Pink theme color */
+  color: var(--pink-500);
+  
+  /* Italic for romantic feel */
+  font-style: italic;
+  font-weight: 400;
+  
+  /* Line height for readability */
+  line-height: 1.6;
+  
+  /* Animation */
+  animation: celebrationSubtitleFadeIn 0.6s ease-out forwards;
+  animation-delay: 0.7s;
+  
+  /* Initial state */
+  opacity: 0;
+  transform: translateY(10px);
+  
+  /* Remove default margin */
+  margin: 0;
+}
+
+@keyframes celebrationSubtitleFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   Celebration Responsive Styles
+   ============================================ */
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+  .celebration-heart {
+    font-size: 2rem;
+  }
+  
+  .celebration-heart:nth-child(odd) {
+    font-size: 2.2rem;
+  }
+  
+  .celebration-heart:nth-child(even) {
+    font-size: 1.8rem;
+  }
+  
+  .celebration-heart:nth-child(3n) {
+    font-size: 2.5rem;
+  }
+  
+  .celebration-message {
+    padding: var(--spacing-2xl) var(--spacing-3xl);
+    width: 450px;
+  }
+  
+  .celebration-title {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .celebration-subtitle {
+    font-size: var(--font-size-lg);
+  }
+  
+  .celebration::before,
+  .celebration::after {
+    font-size: 2.5rem;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .celebration-heart {
+    font-size: 2.5rem;
+  }
+  
+  .celebration-heart:nth-child(odd) {
+    font-size: 2.8rem;
+  }
+  
+  .celebration-heart:nth-child(3n) {
+    font-size: 3rem;
+  }
+  
+  .celebration-message {
+    padding: var(--spacing-2xl) var(--spacing-3xl);
+    width: 500px;
+  }
+  
+  .celebration-title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .celebration-subtitle {
+    font-size: var(--font-size-xl);
+  }
+  
+  .celebration::before,
+  .celebration::after {
+    font-size: 3rem;
+  }
+  
+  @keyframes celebrationHeartFloat {
+    0% {
+      opacity: 0;
+      transform: translateY(0) scale(0.5) rotate(0deg);
+    }
+    10% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-500px) scale(1.3) rotate(var(--heart-rotation, 15deg));
+    }
+  }
+}
+
+/* ============================================
+   Reduced Motion Support for Celebration
+   Requirement 7.6: Respect prefers-reduced-motion
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .celebration {
+    transition: opacity 0.01ms, visibility 0.01ms;
+  }
+  
+  .celebration-heart {
+    animation: none;
+    opacity: 0.7;
+    transform: translateY(-100px);
+  }
+  
+  .celebration-message {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .celebration-title {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .celebration-subtitle {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .celebration::before,
+  .celebration::after {
+    animation: none;
+    opacity: 0.7;
+  }
+  
+  .celebration--active .celebration-message::before,
+  .celebration--active .celebration-message::after {
+    animation: none;
+    opacity: 0.7;
+  }
+  
+  @keyframes sparkleEffect {
+    0%, 100% {
+      opacity: 0.7;
+      transform: none;
+    }
+  }
+  
+  @keyframes confettiFloat {
+    0%, 100% {
+      transform: none;
+      opacity: 0.7;
+    }
+  }
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.footer {
+  background-color: var(--pink-100);
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.footer p {
+  font-family: var(--font-romantic);
+  font-size: var(--font-size-lg);
+  color: var(--pink-500);
+  margin-bottom: var(--spacing-xs);
+}
+
+.footer-signature {
+  font-family: var(--font-romantic);
+  font-size: var(--font-size-md);
+  color: var(--pink-400);
+  font-style: italic;
+  margin-top: var(--spacing-sm);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* ============================================
+   Responsive Styles (Mobile-First Approach)
+   Base styles are for mobile, media queries add tablet/desktop enhancements
+   Note: Hero section responsive styles are defined in the Hero Section above
+   Note: Reasons section responsive styles are defined in the Reasons Section above
+   ============================================ */
+
+/* Tablet (768px and up) - Requirement 1.3 */
+@media (min-width: 768px) {
+  .section-title {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .section {
+    padding: var(--spacing-3xl) var(--spacing-xl);
+    padding-top: calc(var(--spacing-3xl) + 60px);
+  }
+}
+
+/* Desktop (1024px and up) - Requirement 1.4 */
+@media (min-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .section {
+    padding: var(--spacing-3xl) var(--spacing-2xl);
+    padding-top: calc(var(--spacing-3xl) + 60px);
+  }
+}
+
+/* Large Desktop (1280px and up) */
+@media (min-width: 1280px) {
+  .section-content {
+    max-width: var(--container-xl);
+  }
+}
+
+/* ============================================
+   Scroll Reveal Animations
+   Requirements: 7.2 - WHEN sections scroll into view, 
+   THE Website SHALL animate them with fade-in or slide-in effects
+   ============================================ */
+
+/* Base scroll reveal class - initial hidden state */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Visible state - applied when element enters viewport */
+.scroll-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slide-in from left variant */
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-reveal-left.scroll-reveal-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Slide-in from right variant */
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-reveal-right.scroll-reveal-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale-up variant */
+.scroll-reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-reveal-scale.scroll-reveal-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Staggered animation delays for child elements */
+.scroll-reveal-stagger > *:nth-child(1) { transition-delay: 0ms; }
+.scroll-reveal-stagger > *:nth-child(2) { transition-delay: 100ms; }
+.scroll-reveal-stagger > *:nth-child(3) { transition-delay: 200ms; }
+.scroll-reveal-stagger > *:nth-child(4) { transition-delay: 300ms; }
+.scroll-reveal-stagger > *:nth-child(5) { transition-delay: 400ms; }
+.scroll-reveal-stagger > *:nth-child(6) { transition-delay: 500ms; }
+
+/* Reduced motion - disable scroll reveal animations (Requirement 7.6) */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  
+  .scroll-reveal-stagger > * {
+    transition-delay: 0ms;
+  }
+}
+
+/* ============================================
+   Enhanced Hover Effects and Transitions
+   Requirements: 7.1 (smooth transitions on interactive elements)
+   Requirements: 7.4 (visual feedback on hover and click)
+   ============================================ */
+
+/* --- Navigation Link Enhanced Hover Effects --- */
+/* Underline animation grows from center on hover */
+.nav-link {
+  position: relative;
+  transition: 
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+/* Desktop navigation - enhanced underline animation */
+@media (min-width: 768px) {
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 4px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--pink-400) 0%, var(--pink-500) 100%);
+    border-radius: var(--radius-full);
+    transition: width var(--transition-base) ease-out, left var(--transition-base) ease-out;
+    transform: none;
+  }
+  
+  .nav-link:hover::after {
+    width: 60%;
+    left: 20%;
+  }
+  
+  /* Active link has permanent underline */
+  .nav-link.active::after {
+    width: 60%;
+    left: 20%;
+    height: 3px;
+  }
+  
+  .nav-link:hover {
+    color: var(--pink-600);
+    transform: translateY(-2px);
+  }
+}
+
+/* --- Reason Card Default Hover Effect --- */
+/* Default hover for cards without specific variant class */
+.reason-card:hover {
+  transform: scale(1.03) translateY(-4px);
+  box-shadow: 
+    var(--shadow-lg),
+    0 0 20px rgba(236, 72, 153, 0.2);
+  border-color: var(--pink-300);
+}
+
+.reason-card:hover::before {
+  transform: scale(1.2);
+  opacity: 0.6;
+}
+
+.reason-card:hover .reason-card__icon {
+  transform: scale(1.1);
+}
+
+/* --- Gallery Card Enhanced Hover Effects --- */
+/* Lift effect with enhanced shadow on hover */
+.gallery-card:not(.gallery-card--revealed):hover {
+  transform: translateY(-8px);
+}
+
+.gallery-card:not(.gallery-card--revealed):hover .gallery-card__front {
+  box-shadow: 
+    var(--shadow-xl),
+    0 15px 30px rgba(236, 72, 153, 0.2);
+  border-color: var(--pink-400);
+}
+
+.gallery-card:not(.gallery-card--revealed):hover .gallery-card__heart {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.4));
+}
+
+/* Gallery card transition smoothness */
+.gallery-card {
+  transition: transform var(--transition-base) ease-out;
+}
+
+.gallery-card__front {
+  transition: 
+    box-shadow var(--transition-base) ease-out,
+    border-color var(--transition-base) ease-out;
+}
+
+.gallery-card__heart {
+  transition: 
+    transform var(--transition-base) ease-out,
+    filter var(--transition-base) ease-out;
+}
+
+/* --- Button Enhanced Hover Effects --- */
+/* Primary button - enhanced glow on hover */
+.btn-primary:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 
+    var(--shadow-lg),
+    0 0 25px rgba(236, 72, 153, 0.35);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Secondary button - enhanced hover */
+.btn-secondary:hover {
+  background-color: var(--pink-200);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Generic button transition */
+.btn {
+  transition: 
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+/* --- Game Button Enhanced Hover Effects --- */
+/* Yes button - romantic glow effect */
+.yes-btn {
+  transition: 
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.yes-btn:hover {
+  transform: scale(1.08) translateY(-3px);
+  box-shadow: 
+    var(--shadow-xl),
+    0 0 30px rgba(236, 72, 153, 0.4),
+    0 0 60px rgba(236, 72, 153, 0.2);
+}
+
+/* No button - subtle hover before evasion */
+.no-btn {
+  transition: 
+    transform var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.no-btn:hover {
+  background-color: var(--pink-200);
+  border-color: var(--pink-400);
+  box-shadow: var(--shadow-md);
+}
+
+/* --- Scroll Indicator Hover Effect --- */
+.scroll-indicator {
+  transition: transform var(--transition-fast);
+}
+
+.scroll-indicator:hover {
+  transform: translateY(-5px);
+}
+
+.scroll-indicator:hover .scroll-arrow {
+  box-shadow: var(--shadow-md);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.scroll-arrow {
+  transition: 
+    box-shadow var(--transition-fast),
+    background var(--transition-fast);
+}
+
+/* --- Card Component Enhanced Hover --- */
+.card {
+  transition: 
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* --- Link Hover Effects --- */
+a {
+  transition: 
+    color var(--transition-fast),
+    text-decoration var(--transition-fast);
+}
+
+a:hover {
+  color: var(--pink-600);
+}
+
+/* --- Focus States for Accessibility --- */
+/* Ensure focus states also have smooth transitions */
+button:focus-visible,
+a:focus-visible,
+.btn:focus-visible,
+.card:focus-visible,
+.reason-card:focus-visible,
+.gallery-card:focus-visible {
+  outline: 3px solid var(--pink-400);
+  outline-offset: 3px;
+  transition: outline-offset var(--transition-fast);
+}
+
+/* ============================================
+   Reduced Motion - Disable Transform Hover Effects
+   Requirements: 7.6 (respect prefers-reduced-motion)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all transform-based hover effects */
+  .nav-link:hover,
+  .reason-card:hover,
+  .gallery-card:hover,
+  .gallery-card:not(.gallery-card--revealed):hover,
+  .btn:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .yes-btn:hover,
+  .no-btn:hover,
+  .card:hover,
+  .scroll-indicator:hover {
+    transform: none !important;
+  }
+  
+  /* Disable icon transforms */
+  .reason-card:hover .reason-card__icon,
+  .gallery-card:not(.gallery-card--revealed):hover .gallery-card__heart {
+    transform: none !important;
+    filter: none !important;
+  }
+  
+  /* Keep color changes but remove animations */
+  .nav-link::after {
+    transition: none !important;
+  }
+  
+  /* Disable gallery card lift effect */
+  .gallery-card {
+    transition: none !important;
+  }
+  
+  .gallery-card__front,
+  .gallery-card__heart {
+    transition: none !important;
+  }
+  
+  /* Keep visual feedback through color/background changes only */
+  .btn:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    box-shadow: var(--shadow-md);
+  }
+  
+  .reason-card:hover {
+    border-color: var(--pink-400);
+    box-shadow: var(--shadow-lg);
+  }
+}
